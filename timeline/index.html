@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dấu Chân Thanh Xuân - 12A1</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+     <link rel="shortcut icon" href="https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-1/626630319_122153232092719823_8777034317655926720_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=101&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeEyj0QNQNaCWDldyul79r_QkZm5VjyvI9yRmblWPK8j3D_sSsfe5cs8A8IA8PeKLNAv_W7htjBFcPsHTziCKK48&_nc_ohc=3yDptLnnUp8Q7kNvwF9u_Lq&_nc_oc=AdrdIYrBHC6mQlR0VF8q8J63vqtb9BoQ-V44E0uIsfdupX2R-YuXMeVOrKI9eE0JbVaA23MNsVKDD-mw1TEElf0S&_nc_zt=24&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=ArXGuorG_A_FlN2onKPrpw&oh=00_Af1xdZVEeotEnHmuKKEDjIhRKZL2exEjdsrtC2wed363jg&oe=69F21630" type="image/x-icon">
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        /* === 1. CSS RESET & BIẾN MÀU SẮC === */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f4e8c1;
+            --dark: #2c2c2c;
+            --gray: #5a5a5a;
+            --light-bg: #f9f7f4;
+            --white: #ffffff;
+        }
+        body { font-family: 'Inter', sans-serif; background: var(--light-bg); color: var(--dark); line-height: 1.6; }
+        h1, h2, h3, h4 { font-family: 'Playfair Display', serif; }
+
+        /* === 2. NAV BAR === */
+        .navbar { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid #eee; }
+        .nav-container { max-width: 1100px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 70px; }
+        .nav-logo { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--dark); letter-spacing: 1px; }
+        .nav-menu { display: flex; gap: 30px; list-style: none; }
+        .nav-menu a { font-size: 0.9rem; color: var(--gray); text-decoration: none; font-weight: 500; transition: 0.3s; }
+        .nav-menu a:hover, .nav-menu a.active { color: var(--gold); }
+
+        /* === 3. TIÊU ĐỀ CHÍNH === */
+        .page-header { text-align: center; padding: 140px 20px 60px; background: var(--light-bg); }
+        .page-header h1 { font-size: 3rem; color: var(--dark); margin-bottom: 10px; }
+        .page-header .subtitle { color: var(--gray); font-size: 1.1rem; }
+
+        /* === 4. TIMELINE CORE === */
+        .timeline-wrapper { max-width: 1100px; margin: 0 auto; padding: 40px 20px 100px; position: relative; }
+        
+        /* Đường line dọc */
+        .timeline-wrapper::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--gold), #c9a86a);
+        }
+
+        /* Mỗi item trong timeline */
+        .story-block {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end; /* Bên phải */
+            padding-left: 50%; /* Chừa lại bên trái cho line */
+            padding-top: 0; margin-top: 0;
+            margin-bottom: 80px;
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s ease-out;
+        }
+        .story-block.visible { opacity: 1; transform: translateY(0); }
+
+        /* Chẵn: Đảo ngược (Bên trái) */
+        .story-block:nth-child(even) {
+            justify-content: flex-start; /* Bên trái */
+            padding-left: 0;
+            padding-right: 50%; /* Chừa lại bên phải cho line */
+        }
+
+        /* Nút tròn trên timeline */
+        .story-block::before {
+            content: '';
+            position: absolute;
+            top: 30px; /* Căn giữa ảnh */
+            width: 18px;
+            height: 18px;
+            background: var(--white);
+            border: 4px solid var(--gold);
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 0 0 3px var(--white), 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .story-block:nth-child(odd)::before { left: calc(50% - 9px); } /* Nút nằm trên line bên phải */
+        .story-block:nth-child(even)::before { right: calc(50% - 9px); } /* Nút nằm trên line bên trái */
+
+        /* Thanh nối nhỏ từ nút tròn vào box */
+        .story-block::after {
+            content: '';
+            position: absolute;
+            top: 40px;
+            width: 30px;
+            height: 2px;
+            background: var(--gold-light);
+        }
+        .story-block:nth-child(odd)::after { left: calc(50% + 9px); } /* Nối sang phải */
+        .story-block:nth-child(even)::after { right: calc(50% + 9px); } /* Nối sang trái */
+
+        /* === 5. NỘI DUNG TRONG BOX === */
+        .box-content {
+            width: 420px;
+            background: var(--white);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+            transition: 0.3s;
+        }
+        .story-block:hover .box-content { box-shadow: 0 12px 40px rgba(212, 175, 55, 0.15); transform: translateY(-3px); }
+
+        /* Tiêu đề số */
+        .num-tag {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: rgba(212, 175, 55, 0.12);
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+        /* Tiêu đề chính */
+        .box-content h3 { font-size: 1.6rem; margin-bottom: 8px; color: var(--dark); }
+        .highlight { color: #a0522d; font-weight: 500; }
+        /* Văn bản */
+        .box-content p { font-size: 1.02rem; color: var(--gray); margin-bottom: 15px; line-height: 1.75; }
+        .box-content em { color: var(--gold); font-style: italic; font-weight: 500; }
+
+        /* === 6. ẢNH ĐẠI DIỆN === */
+        .img-frame {
+            position: absolute;
+            top: 0;
+            width: 380px;
+            height: 250px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: 0.4s;
+            z-index: 1;
+        }
+        .story-block:nth-child(odd) .img-frame { right: calc(50% + 60px); } /* Ảnh bên phải */
+        .story-block:nth-child(even) .img-frame { left: calc(50% + 60px); } /* Ảnh bên trái */
+
+        .img-frame:hover { transform: scale(1.03); box-shadow: 0 15px 40px rgba(212, 175, 55, 0.3); }
+        .img-frame img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .img-frame:hover img { transform: scale(1.08); }
+
+        /* === 7. LIGHTBOX KHI BẤM ẢNH === */
+        .lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: 0.3s;
+        }
+        .lightbox.active { opacity: 1; pointer-events: all; }
+        .lightbox img { max-width: 90%; max-height: 85vh; border-radius: 8px; box-shadow: 0 0 40px rgba(255,255,255,0.1); }
+        .lightbox-close { position: absolute; top: 30px; right: 50px; color: white; font-size: 40px; cursor: pointer; transition: 0.3s; }
+        .lightbox-close:hover { color: var(--gold); transform: rotate(90deg); }
+        .lightbox-caption { position: absolute; bottom: 30px; color: white; font-size: 1rem; opacity: 0.8; }
+
+        /* === 8. RESPONSIVE - ĐIỆN THOẠI === */
+        @media (max-width: 900px) {
+            .timeline-wrapper::before { left: 30px; }
+            .story-block, .story-block:nth-child(even) {
+                padding-left: 70px; padding-right: 20px;
+                justify-content: flex-start !important;
+            }
+            .story-block::before, .story-block:nth-child(even)::before { left: 21px; }
+            .story-block::after, .story-block:nth-child(even)::after { left: 39px; right: auto; }
+            .img-frame, .story-block:nth-child(odd) .img-frame, .story-block:nth-child(even) .img-frame {
+                position: relative;
+                left: 0 !important; right: 0 !important;
+                width: 100%;
+                margin-top: 20px;
+                order: -1; /* Đưa ảnh lên trên chữ */
+            }
+            .box-content { width: 100%; }
+            .nav-menu { display: none; } /* Ẩn nav trên mobile cho gọn */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+        <nav class="navbar">
+        <div class="nav-container">
+            <a href="" class="nav-logo">Cuộc Sống A1</a>
+            <button class="nav-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="">Trang Chủ</a></li>
+                <li><a href="" class="active">Thành Tựu</a></li>
+                <li><a href="">Dấu Chân</a></li>
+                <li><a href="">Bạn Bè</a></li>
+                <li><a href="">Kỷ Niệm</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- HEADER -->
+    <header class="page-header">
+        <h1>Dấu Chân Thanh Xuân</h1>
+        <p class="subtitle">Hành trình từ những ngày đầu ngại ngùng đến những "cú nổ" rực rỡ - 11A1</p>
+    </header>
+
+    <!-- TIMELINE CONTENT -->
+    <main class="timeline-wrapper">
+
+        <!-- BLOCK 1 -->
+        <article class="story-block">
+           <a href="https://facebook.com/reel/965534035555670/?s=single_unit"> <div class="img-frame" onclick="openLightbox('https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/491609659_122124351920719823_6452903400864950959_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeGJHsQu63zkJ6_41aYQYv5nE4GNPcivRLkTgY09yK9EuUi0K7KUhLYBVdIyS2kvv1lda8pl0vaaklc5Bm8e9YcM&_nc_ohc=g9qy3MhiCQ4Q7kNvwE6cr3F&_nc_oc=AdpJfGuDe9lBiY520Si_ha3N0eyzLM-bQ4Uan1_xSeHR2WYEJBzjW36wuAGRSEYwhAjOgZkD2zMzTzjL1mWhFdA0&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=KnSzWgn52uaECqiE4OyaOg&_nc_ss=7b2a8&oh=00_Af0DHTNEsdFc6UnXC5IBLb8UrjVZb84Pvqk2rP0-k8HGFw&oe=69F2C723', 'Tập văn nghệ đầu tiên, những cái ôm siết chặt')">
+                <img src="https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/491609659_122124351920719823_6452903400864950959_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=2a1932&_nc_eui2=AeGJHsQu63zkJ6_41aYQYv5nE4GNPcivRLkTgY09yK9EuUi0K7KUhLYBVdIyS2kvv1lda8pl0vaaklc5Bm8e9YcM&_nc_ohc=g9qy3MhiCQ4Q7kNvwE6cr3F&_nc_oc=AdpJfGuDe9lBiY520Si_ha3N0eyzLM-bQ4Uan1_xSeHR2WYEJBzjW36wuAGRSEYwhAjOgZkD2zMzTzjL1mWhFdA0&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=KnSzWgn52uaECqiE4OyaOg&_nc_ss=7b2a8&oh=00_Af0DHTNEsdFc6UnXC5IBLb8UrjVZb84Pvqk2rP0-k8HGFw&oe=69F2C723" alt="Tập văn nghệ">
+            </div></a>
+            <div class="box-content">
+                <div class="num-tag">01</div>
+                <h3>Kỉ niệm đầu năm<br><span class="highlight">Mọi người gặp nhau</span></h3>
+                <p>Ngày đầu gặp nhau, tất cả vẫn còn là những cái tên xa lạ, những ánh nhìn ngại ngùng và vài câu chào chưa trọn vẹn.</p>
+                <p>Rồi một buổi tập văn nghệ đến, đơn giản thôi — vài bản nhạc, vài động tác còn vụng về, nhưng đủ để kéo mọi người lại gần nhau hơn. Tiếng cười bắt đầu xuất hiện, khoảng cách dần biến mất.</p>
+                <p><em>Và tấm hình đầu tiên được chụp. Không hoàn hảo, nhưng đó là khoảnh khắc bắt đầu — khi những người xa lạ dần trở thành một tập thể mang tên “chúng ta”.</em></p>
+            </div>
+        </article>
+
+        <!-- BLOCK 2 -->
+        <article class="story-block">
+          <a href="https://www.facebook.com/share/v/18X3S8xSHM/"><div class="img-frame" onclick="openLightbox('https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/473833080_122109749642719823_7751023086568695626_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeHSEfI79T86pMqcnAjATJiuZpkyeAK0Bz9mmTJ4ArQHP8Y5oSf103nqWGeWQLVtH7rH9IQ_Hy496lOiHNY7UlA-&_nc_ohc=pZka8ZByGPsQ7kNvwHg136E&_nc_oc=Adrhh5vnZ40OyntfMeRfXObAC6A-ftNj33lyB0kESDmWd2IdrBITpYkeo6CnM31vFXanFzPT5BzDd2T7t2MXg8Dt&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=EKlsCrOMFaYabN4CvfX_OA&_nc_ss=7b2a8&oh=00_Af3-vVcArI9US-ool6_CrFEiNcxqhrgKq6OW1SQmz4CHCg&oe=69F2B676', 'Hội trại Xuân bùng cháy')">
+                <img src="https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/473833080_122109749642719823_7751023086568695626_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeHSEfI79T86pMqcnAjATJiuZpkyeAK0Bz9mmTJ4ArQHP8Y5oSf103nqWGeWQLVtH7rH9IQ_Hy496lOiHNY7UlA-&_nc_ohc=pZka8ZByGPsQ7kNvwHg136E&_nc_oc=Adrhh5vnZ40OyntfMeRfXObAC6A-ftNj33lyB0kESDmWd2IdrBITpYkeo6CnM31vFXanFzPT5BzDd2T7t2MXg8Dt&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=EKlsCrOMFaYabN4CvfX_OA&_nc_ss=7b2a8&oh=00_Af3-vVcArI9US-ool6_CrFEiNcxqhrgKq6OW1SQmz4CHCg&oe=69F2B676" alt="Hội trại Xuân">
+            </div></a>
+            <div class="box-content">
+    
+                <div class="num-tag">02</div>
+                <h3>Hội trại Xuân<br><span class="highlight">Cực kì bùng cháy</span></h3>
+                <p>Hội trại xuân năm ấy như một ngọn lửa rực cháy giữa thanh xuân của chúng ta.</p>
+                <p>Những ngày cùng nhau dựng trại, trang trí, tập văn nghệ — mệt nhưng vui, đơn giản nhưng đầy ắp tiếng cười. Đêm xuống, ánh đèn, âm nhạc và những khoảnh khắc “cháy” hết mình đã kéo tất cả lại gần nhau hơn bao giờ hết.</p>
+                <p><em>Có lẽ sau này, chúng ta sẽ quên đi nhiều điều… Nhưng cảm giác bùng nổ và những kỉ niệm của hội trại hôm ấy thì sẽ còn mãi.</em></p>
+            </div>
+        </article>
+
+        <!-- BLOCK 3 -->
+        <article class="story-block">
+          <a href="https://www.facebook.com/share/v/1CUjvLntBF/"> <div class="img-frame" onclick="openLightbox('https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/482022311_122117336216719823_7811491231309044496_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeFA3aeSEVe4ZQYkG8c21kLvJKGuqzMxcL0koa6rMzFwvdhlbZy7vTxU5Q9SSpP2bb1eyfFT4skjSvOkHp-cLAp7&_nc_ohc=q1ryDHxqEuEQ7kNvwEhxyJh&_nc_oc=Adrc6bI6GISpN_g65Cx-mBRAt1XZwOSGy0P3gJAeR3MTcfZ5myo_csqHvTGpRveiOG4rPAXsSrPHN92pGYmRF1Ps&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=4fYEo5_wnvTl0-fr8vjDDw&_nc_ss=7b2a8&oh=00_Af26Ds61LnyHkXUMz3r2C0aU7qRqH7yy6mp5Bo5bF2TAzg&oe=69F2C6D8', '8/3 cùng Cô Ngọc')">
+                <img src="https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/482022311_122117336216719823_7811491231309044496_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=103&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeFA3aeSEVe4ZQYkG8c21kLvJKGuqzMxcL0koa6rMzFwvdhlbZy7vTxU5Q9SSpP2bb1eyfFT4skjSvOkHp-cLAp7&_nc_ohc=q1ryDHxqEuEQ7kNvwEhxyJh&_nc_oc=Adrc6bI6GISpN_g65Cx-mBRAt1XZwOSGy0P3gJAeR3MTcfZ5myo_csqHvTGpRveiOG4rPAXsSrPHN92pGYmRF1Ps&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=4fYEo5_wnvTl0-fr8vjDDw&_nc_ss=7b2a8&oh=00_Af26Ds61LnyHkXUMz3r2C0aU7qRqH7yy6mp5Bo5bF2TAzg&oe=69F2C6D8" alt="8/3">
+            </div></a> 
+            <div class="box-content">
+                <div class="num-tag">03</div>
+                <h3>Kỉ niệm 8/3<br><span class="highlight">Cùng cô Ngọc</span></h3>
+                <p>Ngày 8/3 năm ấy không cần quá cầu kỳ, chỉ là những món quà nhỏ, vài lời chúc giản dị nhưng đủ làm cả lớp trở nên ấm áp hơn bao giờ hết.</p>
+                <p>Nụ cười của các bạn nữ, sự quan tâm của tập thể, và cả hình ảnh cô chủ nhiệm đứng giữa lớp — tất cả tạo nên một khoảnh khắc rất riêng, rất đáng nhớ.</p>
+                <p><em>Có lẽ điều đẹp nhất không phải là món quà, mà là cảm giác được trân trọng và ở bên nhau trong những năm tháng thanh xuân ấy.</em></p>
+            </div>
+        </article>
+
+        <!-- BLOCK 4 -->
+        <article class="story-block">
+            <a href="https://www.facebook.com/share/p/1buSSERVNz/"><div class="img-frame" onclick="openLightbox('https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/494116620_122125927310719823_6089228676454821897_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=109&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeGBJmaIHBFCiD-GehKNmh1xYVoISjm4q6phWghKObirqsKuLkaxyKklBZ8UzJM-BnL4lvzBBzlKZrfZJqrKVTx5&_nc_ohc=xGQ64-nBPIsQ7kNvwFZizLQ&_nc_oc=AdoIAddXHb_pKt4mbNdBsU9gV9dLoAWZHKLeJXInAskWqSkL7C8ZEN37dbXbzpXOyOhgGtmD-acYHoxfZf43jhnI&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=uJYqk2MvPV3V_W0ASeUHww&_nc_ss=7b2a8&oh=00_Af36qzcG4OkbVWC4t8QjWR9ZNTn-Z6-rAJgTlyhQ1Ok1ag&oe=69F2B2CC', 'Kỷ niệm 30/4')">
+                <img src="https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/494116620_122125927310719823_6089228676454821897_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=109&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeGBJmaIHBFCiD-GehKNmh1xYVoISjm4q6phWghKObirqsKuLkaxyKklBZ8UzJM-BnL4lvzBBzlKZrfZJqrKVTx5&_nc_ohc=xGQ64-nBPIsQ7kNvwFZizLQ&_nc_oc=AdoIAddXHb_pKt4mbNdBsU9gV9dLoAWZHKLeJXInAskWqSkL7C8ZEN37dbXbzpXOyOhgGtmD-acYHoxfZf43jhnI&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=uJYqk2MvPV3V_W0ASeUHww&_nc_ss=7b2a8&oh=00_Af36qzcG4OkbVWC4t8QjWR9ZNTn-Z6-rAJgTlyhQ1Ok1ag&oe=69F2B2CC" alt="30/4">
+            </div></a>
+            <div class="box-content">
+                <div class="num-tag">04</div>
+                <h3>Chiến thắng chiến dịch<br><span class="highlight">HCM - 30/4</span></h3>
+                <p>Ngày 30/4 không chỉ là một dấu mốc của lịch sử, mà còn là khoảnh khắc để cả lớp cùng nhìn lại và cảm nhận rõ hơn về niềm tự hào dân tộc.</p>
+                <p>Trong không khí ấy, chúng ta cùng nhau ôn lại chiến thắng của cha ông, cùng hát, cùng chia sẻ và hiểu rằng: sự bình yên hôm nay được đánh đổi bằng rất nhiều điều lớn lao.</p>
+                <p><em>Một kỉ niệm không ồn ào, nhưng đủ sâu lắng để mỗi người nhớ mãi — về lịch sử, và về những phút giây chúng ta đã cùng nhau trải qua.</em></p>
+            </div>
+        </article>
+
+        <!-- BLOCK 5 -->
+        <article class="story-block">
+           <a href="https://www.facebook.com/share/v/1BKHuFZHhr/"> <div class="img-frame" onclick="openLightbox('https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/501329734_122129525984719823_8655206386364731492_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeEv7jvKsk5NdpjuETmQ1yOhFPNzzTNJVVUU83PNM0lVVQ96hsRmij8XpKH2woB7uxnGUpAFuQzi4TT7qXoVK7cU&_nc_ohc=iVQH-ZisPnMQ7kNvwG7IXfO&_nc_oc=AdqDbb-NkZH6cug7fmgOn79GKohqYSVWIzS9WrxJBlD3vy9tB4vZ7H_DVdCaQUzccMD-cPjrfYMMYMxpwwRLuMnH&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=1_L-Po95TURhFEHjgwWIvA&_nc_ss=7b2a8&oh=00_Af3-ni_t0cZFPJ1ZShyeOD_h4xnANyJad0fVT77OQWEyBA&oe=69F2AE27', 'Tổng kết Lớp 10')">
+                <img src="https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/501329734_122129525984719823_8655206386364731492_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=108&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeEv7jvKsk5NdpjuETmQ1yOhFPNzzTNJVVUU83PNM0lVVQ96hsRmij8XpKH2woB7uxnGUpAFuQzi4TT7qXoVK7cU&_nc_ohc=iVQH-ZisPnMQ7kNvwG7IXfO&_nc_oc=AdqDbb-NkZH6cug7fmgOn79GKohqYSVWIzS9WrxJBlD3vy9tB4vZ7H_DVdCaQUzccMD-cPjrfYMMYMxpwwRLuMnH&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=1_L-Po95TURhFEHjgwWIvA&_nc_ss=7b2a8&oh=00_Af3-ni_t0cZFPJ1ZShyeOD_h4xnANyJad0fVT77OQWEyBA&oe=69F2AE27" alt="Tong ket 10A1">
+            </div></a>
+            <div class="box-content">
+                <div class="num-tag">05</div>
+                <h3>Tổng kết<br><span class="highlight">Lớp 10</span></h3>
+                <p>Một năm học trôi qua, 10A1 từ những con người xa lạ đã trở thành một tập thể gắn bó.</p>
+                <p>Chúng ta đã cùng nhau đi qua những ngày đầu ngại ngùng, những buổi tập văn nghệ, những lần “cháy” hết mình ở hội trại, những khoảnh khắc ấm áp ngày 8/3 và cả những phút giây lắng lại khi nhớ về lịch sử 30/4.</p>
+                <p><em>Không phải mọi thứ đều hoàn hảo, nhưng chính những điều chưa hoàn hảo ấy lại tạo nên một 10A1 rất riêng. 10A1 sẽ luôn là một phần không thể quên trong tuổi trẻ của chúng ta.</em></p>
+            </div>
+        </article>
+
+        <!-- BLOCK 6 -->
+        <article class="story-block">
+           <a href="https://www.facebook.com/reel/861023222914071/?s=single_unit"> <div class="img-frame" onclick="openLightbox('./image/img1.png', 'Đón cô chủ nhiệm mới Yến')">
+                <img src="./image/img1.png" alt="Cô Yến">
+            </div></a>
+            <div class="box-content">
+                <div class="num-tag">06</div>
+                <h3>Đón chào Cô Chủ nhiệm<br><span class="highlight">Mới</span></h3>
+                <p>Một sự thay đổi nhẹ, nhưng đủ để mở ra một chặng hành trình mới cho 11A1.</p>
+                <p>Ngày đón cô chủ nhiệm mới — cô Võ Trần Hải Yến — không quá ồn ào, nhưng lại mang theo nhiều cảm xúc. Từ những buổi đầu còn xa lạ, dần dần là sự thấu hiểu, quan tâm và gắn kết.</p>
+                <p><em>Cô không chỉ là giáo viên, mà còn là người đồng hành cùng chúng ta trong những ngày tháng phía trước. Và chính từ khoảnh khắc ấy, 11A1 lại có thêm một phần ký ức đáng nhớ.</em></p>
+            </div>
+        </article>
+
+        <!-- BLOCK 7 -->
+        <article class="story-block">
+           <a href="https://www.facebook.com/reel/830675182637239"> <div class="img-frame" onclick="openLightbox('./image/img2.png', '20/10 cho các bạn nữ')">
+                <img src="./image/img2.png" alt="20/10">
+            </div></a>
+            <div class="box-content">
+                <div class="num-tag">07</div>
+                <h3>20.10<br><span class="highlight">Cho các bạn Nữ</span></h3>
+                <p>Ngày 20/10 của 11A1 trôi qua thật nhẹ nhàng nhưng đầy ấm áp.</p>
+                <p>Những món quà nhỏ, những lời chúc giản dị đã đủ làm cả lớp rộn ràng tiếng cười. Không cần quá cầu kỳ, chỉ cần sự chân thành cũng khiến khoảnh khắc ấy trở nên đáng nhớ.</p>
+                <p><em>Đó chính là cảm giác được trân trọng và ở bên nhau.</em></p>
+            </div>
+        </article>
+
+        <!-- BLOCK 8 -->
+        <article class="story-block">
+            <a href="https://www.facebook.com/reel/1487240355884823"><div class="img-frame" onclick="openLightbox('https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/500784852_122129526152719823_909077459731406144_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeH35uHLkdjUhgLkmyPWY1AGYWwKfaS8QuRhbAp9pLxC5LCsXx7V7xh5nuH7uKHoZuUzswjJn3xG2S3bbnANDCFI&_nc_ohc=IL3GPuIWaw4Q7kNvwHXoB20&_nc_oc=AdqrB9gRQUHEJWJHr2DgHe7Sr3JGMnd3MNO1E31AQv03EMQ8N7LeYMAx9409wmQf9rOzsPcOI6HHbsddHsh7tqeQ&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=nzGA0jIoRM2AxTlFtgpwHQ&_nc_ss=7b2a8&oh=00_Af3EbBLvfd95tB0K5dE5QYIHUxwYFvnMH2b3s8iIQla87g&oe=69F2A86F', '19/11 cho các bạn nam')">
+                <img src="https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/500784852_122129526152719823_909077459731406144_n.jpg?stp=cp6_dst-jpg_tt6&_nc_cat=105&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeH35uHLkdjUhgLkmyPWY1AGYWwKfaS8QuRhbAp9pLxC5LCsXx7V7xh5nuH7uKHoZuUzswjJn3xG2S3bbnANDCFI&_nc_ohc=IL3GPuIWaw4Q7kNvwHXoB20&_nc_oc=AdqrB9gRQUHEJWJHr2DgHe7Sr3JGMnd3MNO1E31AQv03EMQ8N7LeYMAx9409wmQf9rOzsPcOI6HHbsddHsh7tqeQ&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=nzGA0jIoRM2AxTlFtgpwHQ&_nc_ss=7b2a8&oh=00_Af3EbBLvfd95tB0K5dE5QYIHUxwYFvnMH2b3s8iIQla87g&oe=69F2A86F" alt="19/11">
+            </div></a>
+            <div class="box-content">
+                <div class="num-tag">08</div>
+                <h3>19.11<br><span class="highlight">Cho các bạn Nam</span></h3>
+                <p>Nếu 20/10 là ngày của các bạn nữ, thì 19/11 lại là dịp đặc biệt dành cho các bạn nam của 11A1.</p>
+                <p>Không quá rộn ràng, nhưng vẫn đủ tiếng cười, những lời chúc vui vẻ và vài khoảnh khắc “được quan tâm” hiếm hoi khiến cả lớp thêm phần gần gũi.</p>
+                <p><em>Khi ai trong 11A1 cũng đều là một phần không thể thiếu của tập thể này.</em></p>
+            </div>
+        </article>
+
+        <!-- BLOCK 9 -->
+        <article class="story-block">
+           <a href="https://www.facebook.com/share/p/1VEZzvpyN3/"> <div class="img-frame" onclick="openLightbox('https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/585980547_122147313260719823_1906000517459308223_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeGcgRaY4ZuvwSU77cxb2g4b2JzQwNO-zgbYnNDA077OBrGlVE7QK3luXabU24lvElT6x_HVuueqCEbvcOWDaG1I&_nc_ohc=UtRCnphogqsQ7kNvwGyMGnX&_nc_oc=AdoABaK53ZurqBqb_ur7vXFyLBTWyRj4FYeGI_lnmU7HpSfIYZx4qUIvKifYQ7zs68VDSkx5n5mne9CADok-SR9W&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=gEqVPmyPuBuIKl8EhQ_J4A&_nc_ss=7b2a8&oh=00_Af0r9BPaJYi34rIlsn14sKwlcK7eb06ugVI-RdLvwlelgw&oe=69F2B42D', '20/11 cùng thầy cô')">
+                <img src="https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/585980547_122147313260719823_1906000517459308223_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeGcgRaY4ZuvwSU77cxb2g4b2JzQwNO-zgbYnNDA077OBrGlVE7QK3luXabU24lvElT6x_HVuueqCEbvcOWDaG1I&_nc_ohc=UtRCnphogqsQ7kNvwGyMGnX&_nc_oc=AdoABaK53ZurqBqb_ur7vXFyLBTWyRj4FYeGI_lnmU7HpSfIYZx4qUIvKifYQ7zs68VDSkx5n5mne9CADok-SR9W&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=gEqVPmyPuBuIKl8EhQ_J4A&_nc_ss=7b2a8&oh=00_Af0r9BPaJYi34rIlsn14sKwlcK7eb06ugVI-RdLvwlelgw&oe=69F2B42D" alt="20/11">
+            </div></a>
+            <div class="box-content">
+                <div class="num-tag">09</div>
+                <h3>Ngày 20/11<br><span class="highlight">Cùng thầy cô</span></h3>
+                <p>Ngày 20/11 không chỉ là những bó hoa hay lời chúc, mà là dịp để cả lớp cùng nhìn lại và gửi gắm lòng biết ơn.</p>
+                <p>Những tiết mục, những lời nói có thể còn vụng về, nhưng đều xuất phát từ sự chân thành. Tiếng cười xen lẫn những phút lắng lại, khi ai cũng hiểu rằng thầy cô đã luôn âm thầm đồng hành cùng chúng ta.</p>
+                <p><em>Một ngày ý nghĩa, không chỉ để tri ân, mà còn để lưu giữ những khoảnh khắc đẹp nhất giữa thầy và trò.</em></p>
+            </div>
+        </article>
+
+        <!-- BLOCK 10 -->
+        <article class="story-block">
+          <a href="https://www.facebook.com/share/p/14Vxf6hYc4A/">   <div class="img-frame" onclick="openLightbox('https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/603908116_122150137562719823_3195735161907882620_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeFxYM9dxAdZ-lO0cnigoxXdFQ6yncZgh60VDrKdxmCHrQ7ZO7-_fj1rZmEBCuBdMyJ0sE3RgSIPBpF5ul4kuIbu&_nc_ohc=EPtEuXryk9YQ7kNvwFu-UCA&_nc_oc=Ado70Rwvf1pIKmFg5PJ3OlXk_ArTWWwa7rigBXyp0fezH7lHu5wyyfNevEtdQaDhf15qTm0Q3a6CJJ95zrnQkMW7&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=j4BFYPhvlndbzujfz3MJPA&_nc_ss=7b2a8&oh=00_Af2jIB8-GxPQiKO56XnXNPD_JKSBqCjjouPYxYk-Q9DrOg&oe=69F2B1EC', 'Tết Giang Hàng')">
+                <img src="https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/603908116_122150137562719823_3195735161907882620_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeFxYM9dxAdZ-lO0cnigoxXdFQ6yncZgh60VDrKdxmCHrQ7ZO7-_fj1rZmEBCuBdMyJ0sE3RgSIPBpF5ul4kuIbu&_nc_ohc=EPtEuXryk9YQ7kNvwFu-UCA&_nc_oc=Ado70Rwvf1pIKmFg5PJ3OlXk_ArTWWwa7rigBXyp0fezH7lHu5wyyfNevEtdQaDhf15qTm0Q3a6CJJ95zrnQkMW7&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=j4BFYPhvlndbzujfz3MJPA&_nc_ss=7b2a8&oh=00_Af2jIB8-GxPQiKO56XnXNPD_JKSBqCjjouPYxYk-Q9DrOg&oe=69F2B1EC" alt="Tet">
+            </div></a>
+            <div class="box-content">
+                <div class="num-tag">10</div>
+                <h3>Cùng tổ chức sn<br><span class="highlight">Cô Võ Trần Hải Yến</span></h3>
+                <p>Một ngày sinh nhật thật đặc biệt, khi cả 11A1 cùng nhau chuẩn bị và tổ chức cho “nhân vật chính”.</p>
+                <p>Không cần quá hoành tráng, chỉ là một chiếc bánh, vài lời chúc và rất nhiều tiếng cười. Nhưng chính sự bất ngờ và tình cảm chân thành đã khiến khoảnh khắc ấy trở nên ấm áp hơn bao giờ hết.</p>
+                <p><em>Đó không chỉ là sinh nhật của cô, mà còn là dịp để 11A1 thể hiện sự yêu thương và gắn bó.</em></p>
+            </div>
+        </article>
+
+        <!-- BLOCK 11 -->
+        <article class="story-block">
+          <a href="https://www.facebook.com/share/p/17iTCCVRcE/"><div class="img-frame" onclick="openLightbox('https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/629650718_122153777084719823_8955956347026400932_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeF0k-Kc_ZLN7UmoGGyDrEZxMqP1h2W-wdoyo_WHZb7B2m6FItBaozI9F5ENBTdSJnbGhfnfTxarcSG0XhyoC0Dh&_nc_ohc=Z7gyRONtu5QQ7kNvwErGCoF&_nc_oc=AdpXUWDDijjC9WPxnjFwEDepyCqJ5v87gwlDgf9QK3-mbCGFz6UTYJmYhGxtIozYHM7bigcl3AKus8zzCq8BKgLi&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=UPr1UeBm_y1PZZZw1ievnw&_nc_ss=7b2a8&oh=00_Af1ZlojdWVPvOfudIlpifMPpZl1d8A61DXMv2h1hNDYcCA&oe=69F2B47C', 'Tết Giang Hàng')">
+                <img src="https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-6/629650718_122153777084719823_8955956347026400932_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=7b2446&_nc_eui2=AeF0k-Kc_ZLN7UmoGGyDrEZxMqP1h2W-wdoyo_WHZb7B2m6FItBaozI9F5ENBTdSJnbGhfnfTxarcSG0XhyoC0Dh&_nc_ohc=Z7gyRONtu5QQ7kNvwErGCoF&_nc_oc=AdpXUWDDijjC9WPxnjFwEDepyCqJ5v87gwlDgf9QK3-mbCGFz6UTYJmYhGxtIozYHM7bigcl3AKus8zzCq8BKgLi&_nc_zt=23&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=UPr1UeBm_y1PZZZw1ievnw&_nc_ss=7b2a8&oh=00_Af1ZlojdWVPvOfudIlpifMPpZl1d8A61DXMv2h1hNDYcCA&oe=69F2B47C" alt="Tet">
+            </div></a> 
+            <div class="box-content">
+                <div class="num-tag">11</div>
+                <h3>Rộn ràng chuẩn bị<br><span class="highlight">Tết khai xuân 2026</span></h3>
+                <p>Những ngày cận Tết, 11A1 rộn ràng hơn bao giờ hết khi cùng nhau chuẩn bị cho gian hàng ẩm thực khai xuân 2026.</p>
+                <p>Từ lên ý tưởng, chuẩn bị nguyên liệu đến trang trí gian hàng — tất cả đều mang đậm dấu ấn của sự háo hức và tinh thần đồng đội. Có mệt, có vội, nhưng đổi lại là tiếng cười và những khoảnh khắc thật vui bên nhau.</p>
+                <p><em>Giữa không khí Tết rộn ràng, gian hàng nhỏ của 11A1 không chỉ là nơi bán đồ ăn, mà còn là nơi lưu giữ những kỉ niệm ấm áp của cả tập thể.</em></p>
+            </div>
+        </article>
+
+        <!-- BLOCK 12 -->
+        <article class="story-block">
+           <a href="https://www.facebook.com/share/p/1Ce1k4WNJ4/"> <div class="img-frame" onclick="openLightbox('./image/2.png', 'No lon - Thành tích cao')">
+                <img src="./image/2.png" alt="Thanh tu">
+            </div></a>
+            <div class="box-content">
+                <div class="num-tag">12</div>
+                <h3>Nổ lớn<br><span class="highlight">Thành tích cao đạt được</span></h3>
+                <p>Một năm học không chỉ có kỉ niệm, mà còn là những dấu ấn đáng tự hào của 11A1.</p>
+                <p>Từ học tập đến phong trào, từng thành tích đạt được đều là kết quả của sự cố gắng và tinh thần không ngừng vươn lên. Có những khoảnh khắc vỡ òa khi tên lớp được xướng lên — đó không chỉ là niềm vui, mà còn là sự khẳng định cho hành trình đã đi qua.</p>
+                <p><em>Không phải ngẫu nhiên mà có được, tất cả đều là sự nỗ lực. Và chính những “cú nổ” ấy đã làm nên một 11A1 thật rực rỡ.</em></p>
+            </div>
+        </article>
+
+    </main>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="">
+        <div class="lightbox-caption" id="lightbox-caption"></div>
+    </div>
+
+    <!-- FOOTER -->
+        <footer class="footer">
+         <div class="container">
+            <p>©phanhoaian va CuocsongA1</p>
+            <div class="footer-links">
+                <a href="index.html">Trang Chủ</a>
+                <a href="./achievements/">Thành Tựu</a>
+                <a href="./timeline/">Dấu Chân</a>
+                <a href="./members/">Bạn Bè</a>
+                <a href="./gallery/">Kỷ Niệm</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT (NẰM DƯỚI CÙNG FILE HTML) -->
+    <script>
+        // 1. HIỆN THỊ TIMELINE KHI SCROLL
+        document.addEventListener('DOMContentLoaded', function() {
+            const blocks = document.querySelectorAll('.story-block');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            blocks.forEach(block => observer.observe(block));
+        });
+
+        // 2. MỞ LIGHTBOX KHI BẤM ẢNH
+        function openLightbox(src, caption) {
+            const lb = document.querySelector('.lightbox');
+            document.getElementById('lightbox-img').src = src;
+            document.getElementById('lightbox-caption').innerText = caption;
+            lb.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Ngăn cuộn nền
+        }
+
+        // 3. ĐÓNG LIGHTBOX
+        function closeLightbox() {
+            const lb = document.querySelector('.lightbox');
+            lb.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Cho phép cuộn lại
+        }
+    </script>
+</body>
+</html>

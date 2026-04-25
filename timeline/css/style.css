@@ -1,0 +1,850 @@
+/* ============================================ */
+/* 1. CSS RESET & BIẾN CƠ BẢN (Phải nằm trên cùng) */
+/* ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-primary: #fdfaf6;
+    --bg-secondary: #faf5f0;
+    --accent-purple: #8b73a6;
+    --accent-gold: #c9a86a;
+    --text-dark: #3d3d3d;
+    --text-light: #8a7c6f;
+    --text-muted: #b8a99a;
+    --white: #ffffff;
+    --shadow: 0 8px 32px rgba(61, 61, 61, 0.08);
+    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    background-color: var(--bg-primary);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    transition: var(--transition);
+}
+
+ul {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ============================================ */
+/* 2. NAVIGATION & COMPONENTS CƠ BẢN            */
+/* ============================================ */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(253, 250, 246, 0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(184, 169, 154, 0.15);
+    transition: var(--transition);
+}
+
+.navbar.scrolled {
+    box-shadow: var(--shadow);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+}
+
+.nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    letter-spacing: -0.02em;
+}
+
+.nav-menu {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+}
+
+.nav-menu a {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-purple);
+    transition: var(--transition);
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+    color: var(--text-dark);
+}
+
+.nav-menu a:hover::after,
+.nav-menu a.active::after {
+    width: 100%;
+}
+
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+}
+
+.nav-toggle span {
+    width: 24px;
+    height: 2px;
+    background: var(--text-dark);
+    transition: var(--transition);
+}
+
+.music-toggle {
+    position: fixed;
+    bottom: 32px;
+    right: 32px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 1px solid rgba(184, 169, 154, 0.3);
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+}
+
+.music-toggle:hover {
+    transform: scale(1.1);
+    border-color: var(--accent-purple);
+}
+
+.music-toggle.playing {
+    background: var(--accent-purple);
+    color: var(--white);
+}
+
+.music-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    z-index: 1001;
+    pointer-events: none;
+}
+
+.progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-purple), var(--accent-gold));
+    width: 0%;
+    transition: width 0.1s ease-out;
+}
+
+/* ============================================ */
+/* 3. TIMELINE PAGE - CINEMATIC STORYTELLING     */
+/* ============================================ */
+.timeline-page {
+    padding-bottom: 80px;
+    background: #f9f7f4;
+}
+
+.story-timeline {
+    position: relative;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding-left: 40px;
+    border-left: 2px solid #e8dfd6;
+}
+
+.story-section {
+    position: relative;
+    margin-bottom: 80px;
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.story-section.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.story-content {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.04);
+    position: relative;
+    width: calc(100% - 60px);
+    margin-left: 20px;
+}
+
+.story-content::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -60px;
+    width: 16px;
+    height: 16px;
+    background: #d4af37;
+    border-radius: 50%;
+    border: 4px solid var(--white);
+    box-shadow: 0 0 0 2px #d4af37;
+    z-index: 2;
+}
+
+.story-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 700;
+    color: #f0e6d3;
+    line-height: 1;
+    position: absolute;
+    top: -10px;
+    right: 40px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.story-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.highlight {
+    color: var(--accent-purple);
+    font-weight: 400;
+    display: block;
+    font-size: 1.1em;
+}
+
+.story-content p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--text-light);
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.story-content em {
+    color: var(--accent-purple);
+    font-style: italic;
+    font-weight: 500;
+}
+
+.story-image {
+    position: absolute;
+    left: -300px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 240px;
+    height: 240px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 1;
+}
+
+.story-image:hover {
+    transform: translateY(-50%) scale(1.05);
+    box-shadow: 0 12px 35px rgba(212, 175, 55, 0.3);
+}
+
+.story-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+/* Lightbox */
+.lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.92);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+.lightbox-image {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+}
+
+.lightbox-close,
+.lightbox-nav {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: var(--white);
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    backdrop-filter: blur(5px);
+    z-index: 10;
+}
+
+.lightbox-close:hover,
+.lightbox-nav:hover {
+    background: rgba(212, 175, 55, 0.8);
+    transform: scale(1.1);
+}
+
+.lightbox-close {
+    top: -70px;
+    right: 0;
+}
+
+.lightbox-nav {
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2.5rem;
+    width: 60px;
+    height: 60px;
+}
+
+.lightbox-nav.prev {
+    left: -70px;
+}
+
+.lightbox-nav.next {
+    right: -70px;
+}
+
+/* Responsive Timeline */
+@media (max-width: 992px) {
+    .story-timeline { padding-left: 20px; }
+    .story-image {
+        position: relative;
+        left: 0; top: 0; transform: none;
+        width: 100%; height: 280px;
+        margin-bottom: 20px;
+    }
+    .story-content { width: 100%; margin-left: 0; padding: 25px; }
+    .story-content::before { left: -52px; }
+    .story-number { right: 10px; font-size: 3rem; }
+}
+@media (max-width: 768px) {
+    .lightbox-nav { left: 10px; right: 10px; width: 40px; height: 40px; font-size: 1.5rem; }
+    .lightbox-nav.prev { left: 10px; }
+    .lightbox-nav.next { right: 10px; }
+    .lightbox-close { top: -60px; width: 40px; height: 40px; font-size: 1.5rem; }
+}
+
+/* ============================================ */
+/* 4. PAGE HEADER, FOOTER, FILTERS (CŨ)          */
+/* ============================================ */
+.page-header {
+    text-align: center;
+    padding: 100px 0 60px;
+}
+
+.page-header h1 {
+    font-size: 3.5rem;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.page-subtitle {
+    font-size: 1.25rem;
+    color: var(--text-light);
+}
+
+.achievement-filters, .filters {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 50px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 24px;
+    background: transparent;
+    border: 1px solid #444;
+    color: #aaa;
+    font-size: 0.8rem;
+    border-radius: 0;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 500;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    border-color: #d4af37;
+    color: #d4af37;
+    background: rgba(212, 175, 55, 0.05);
+}
+
+.section-divider {
+    width: 100%;
+    grid-column: 1 / -1;
+    text-align: left;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: #d4af37;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 15px 20px;
+    background: #111;
+    border-left: 2px solid #d4af37;
+    margin-bottom: 10px;
+}
+
+/* ============================================ */
+/* 5. ACHIEVEMENT OLD & GOLDEN BOARDS            */
+/* ============================================ */
+.gold-leaderboard-grid, .leaderboard-grid, .achievement-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 24px;
+    margin-bottom: 80px;
+}
+
+/* Profile Card (Vàng Bạc Đồng Dark) */
+.prestige-card {
+    background: #121212;
+    border: 1px solid #1e1e1e;
+    border-radius: 0;
+    padding: 30px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.prestige-card:hover {
+    border-color: transparent;
+    transform: translateY(-3px);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+}
+
+.trophy-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+}
+
+.trophy-icon.gold {
+    background: linear-gradient(145deg, #ffd700, #b8941d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.trophy-icon.gold .material-symbols-outlined {
+    background: linear-gradient(145deg, #ffd700, #b8941d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.trophy-icon.silver {
+    background: linear-gradient(145deg, #c0c0c0, #808080);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.trophy-icon.silver .material-symbols-outlined {
+    background: linear-gradient(145deg, #c0c0c0, #808080);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.trophy-icon.bronze {
+    background: linear-gradient(145deg, #cd7f32, #8b4513);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.trophy-icon.bronze .material-symbols-outlined {
+    background: linear-gradient(145deg, #cd7f32, #8b4513);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.trophy-icon.silver-star { background: #333; }
+.trophy-icon.silver-star .material-symbols-outlined { color: #ddd; }
+
+.trophy-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+}
+.trophy-sub {
+    font-size: 0.75rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 15px;
+}
+.trophy-pill {
+    display: inline-block;
+    background: transparent;
+    color: #d4af37;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    border: 1px solid #d4af37;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+}
+.prestige-card:hover .trophy-pill {
+    background: #d4af37;
+    color: #000;
+}
+
+/* Old Grid Cards */
+.profile-card, .achievement-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    opacity: 0;
+    transform: translateY(40px);
+}
+.profile-card.visible, .achievement-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+.profile-card:hover, .achievement-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 60px rgba(61, 61, 61, 0.12);
+}
+.card-image { height: 240px; overflow: hidden; }
+.card-image img { width: 100%; height: 100%; object-fit: cover; transition: var(--transition); }
+.achievement-card:hover .card-image img { transform: scale(1.08); }
+.card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 0%, rgba(61, 61, 61, 0.3) 100%);
+}
+.card-content { padding: 24px; }
+.card-category {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--accent-purple);
+    font-weight: 600;
+}
+.card-content h3 { font-size: 1.5rem; margin: 0.75rem 0; color: var(--text-dark); }
+.card-content p { color: var(--text-light); font-size: 0.95rem; }
+
+/* Footer */
+.footer {
+    background: var(--text-dark);
+    color: var(--white);
+    padding: 60px 0 30px;
+}
+.footer p { text-align: center; color: var(--text-muted); font-size: 0.9rem; }
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+}
+.footer-links a { color: var(--text-muted); font-size: 0.9rem; transition: var(--transition); }
+.footer-links a:hover { color: var(--accent-gold); }
+
+/* ============================================ */
+/* 6. RESPONSIVE NAV & MOBILE                   */
+/* ============================================ */
+@media (max-width: 768px) {
+    .nav-toggle { display: flex; }
+    .nav-menu {
+        position: fixed;
+        top: 72px;
+        left: 0;
+        right: 0;
+        background: var(--bg-primary);
+        flex-direction: column;
+        padding: 24px;
+        gap: 0;
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+        transition: var(--transition);
+    }
+    .nav-menu.open { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+    .nav-menu li { width: 100%; border-bottom: 1px solid rgba(184, 169, 154, 0.15); }
+    .nav-menu a { display: block; padding: 16px 0; }
+    .nav-menu a::after { display: none; }
+    .music-toggle { bottom: 24px; right: 24px; width: 48px; height: 48px; }
+    .hero-title { font-size: 2.5rem; }
+}
+/* ============================================ */
+/* TIMELINE PAGE: HIỆN THỊ ĐÚNG ĐẮC GIÁM TRỊ    */
+/* ============================================ */
+.timeline-page {
+    padding-bottom: 80px;
+    background-color: #f5f3ef; /* Nền kem ấm */
+}
+
+.story-timeline {
+    position: relative;
+    max-width: 1000px;
+    margin: 40px auto 0;
+    padding-left: 30px; /* Dành khoảng trống cho đường kẻ timeline */
+}
+
+/* Đường kẻ timeline dọc */
+.story-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--accent-purple), var(--accent-gold));
+    border-radius: 10px;
+}
+
+/* --- MỖI BỐNG TRẮNG TRÊN TIMELINE --- */
+.story-section {
+    position: relative;
+    margin-bottom: 60px;
+    opacity: 0; /* Ẩn mặc định */
+    transform: translateX(-30px); /* Tạo hiệu ứng trượt từ trái sang */
+    transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); /* Mượt mà */
+}
+
+/* Khi người dùng scroll tới, nó sẽ hiện ra */
+.story-section.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Viền vàng (nút tròn) ghim vào đường kẻ timeline */
+.story-section::before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    left: -41px; /* Căn chỉnh vào giữa đường kẻ */
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    border: 4px solid #d4af37; /* Vàng gold nổi bật */
+    z-index: 2;
+    box-shadow: 0 0 0 2px white, 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* Khung chứa NỘI DUNG (Chữ hoặc Ảnh) */
+.story-content {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    width: calc(100% - 50px); /* Không bị tràn ra ngoài */
+}
+
+/* Tiêu đề số thứ tự */
+.story-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: rgba(212, 175, 55, 0.1); /* Màu vàng nhạt làm nền */
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+/* Tiêu đề chính */
+.story-content h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: #2c2c2c;
+    margin-bottom: 12px;
+    line-height: 1.3;
+}
+
+/* Tô đậm chữ */
+.story-content .highlight {
+    color: var(--accent-purple);
+    display: block;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+/* Đoạn văn bản */
+.story-content p {
+    font-size: 1.05rem;
+    color: #5a5a5a;
+    line-height: 1.7;
+    margin-bottom: 15px;
+}
+
+/* In nghiêng */
+.story-content em {
+    color: var(--accent-purple);
+    font-style: italic;
+    font-weight: 500;
+}
+
+/* Ảnh đại diện */
+.story-image {
+    margin-bottom: 20px; /* Cách chữ một chút */
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    cursor: pointer;
+    height: 280px; /* Cố định chiều cao cho đẹp */
+}
+
+.story-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cắt vừa vặn ảnh */
+    transition: transform 0.5s ease;
+}
+
+.story-image:hover img {
+    transform: scale(1.05); /* Phóng to nhẹ khi hover */
+}
+
+/* -------------------------------------- */
+/* RESPONSIVE: KHI MÀN HÌNH NHỎ (ĐIỆN THOẠI) */
+/* -------------------------------------- */
+@media (min-width: 769px) {
+    /* Trên PC: Sắp xếp 2 cột (NẾU CHỈ CÓ CHỮ - Ảnh mặc định nằm ngang) 
+       Nhưng vì trong HTML của bạn ảnh nằm trước, ta sẽ đảo ngược thứ tự bằng CSS grid */
+    .story-timeline {
+        display: grid;
+        grid-template-columns: 1fr 1fr; /* 2 cột bằng nhau */
+        gap: 30px;
+        align-items: center;
+        padding-left: 50px;
+    }
+
+    /* Gắn timeline vào giữa 2 cột */
+    .story-timeline::before {
+        left: 50%; /* Chạy dọc giữa màn hình */
+        transform: translateX(-50%);
+    }
+
+    /* Viền tròn timeline căn giữa */
+    .story-section::before {
+        left: -85px; /* Lùi về đúng tâm của cột timeline */
+    }
+
+    /* Ảnh: Cột trái */
+    .story-image {
+        margin-bottom: 0;
+        height: 300px;
+        justify-self: end; /* Đẩy ảnh sát vào giữa */
+        width: 100%;
+    }
+
+    /* Nội dung chữ: Cột phải */
+    .story-content {
+        width: 100%;
+        margin-left: 0;
+        justify-self: start; /* Đẩy text sát vào giữa */
+    }
+
+    /* Tạo mũi tên nối từ timeline vào box */
+    .story-content::after {
+        content: '';
+        position: absolute;
+        top: 30px;
+        right: 100%;
+        width: 35px;
+        height: 3px;
+        background: var(--accent-gold);
+    }
+}
+
+@media (max-width: 768px) {
+    /* Điện thoại: Ảnh to, chữ to, bo góc rõ */
+    .story-timeline { padding-left: 20px; }
+    .story-section::before { left: -38px; top: 20px; }
+    .story-content { padding: 20px; width: calc(100% - 35px); }
+    .story-number { font-size: 2.2rem; }
+}

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bảng Vàng - 12A1</title>
+    <!-- Material Icons (Sang trọng) -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Font Chữ Hoàng Gia -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="https://scontent.fsgn22-1.fna.fbcdn.net/v/t39.30808-1/626630319_122153232092719823_8777034317655926720_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=101&ccb=1-7&_nc_sid=1d2534&_nc_eui2=AeEyj0QNQNaCWDldyul79r_QkZm5VjyvI9yRmblWPK8j3D_sSsfe5cs8A8IA8PeKLNAv_W7htjBFcPsHTziCKK48&_nc_ohc=3yDptLnnUp8Q7kNvwF9u_Lq&_nc_oc=AdrdIYrBHC6mQlR0VF8q8J63vqtb9BoQ-V44E0uIsfdupX2R-YuXMeVOrKI9eE0JbVaA23MNsVKDD-mw1TEElf0S&_nc_zt=24&_nc_ht=scontent.fsgn22-1.fna&_nc_gid=ArXGuorG_A_FlN2onKPrpw&oh=00_Af1xdZVEeotEnHmuKKEDjIhRKZL2exEjdsrtC2wed363jg&oe=69F21630" type="image/x-icon">
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+        <nav class="navbar">
+        <div class="nav-container">
+            <a href="" class="nav-logo">Cuộc Sống A1</a>
+            <button class="nav-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="">Trang Chủ</a></li>
+                <li><a href="" class="active">Thành Tựu</a></li>
+                <li><a href="">Dấu Chân</a></li>
+                <li><a href="">Bạn Bè</a></li>
+                <li><a href="">Kỷ Niệm</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="royal-achievements">
+        <div class="container">
+            <br><br><br>
+            <header class="royal-header">
+                <h1>BẢNG VINH DANH</h1>
+                <p style="text-transform: uppercase; letter-spacing: 4px; color: var(--text-muted); font-weight: 300;">Lớp 12A1 - Những đỉnh cao</p>
+            </header>
+
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">Tất Cả</button>
+                <button class="filter-btn" data-filter="10">Khối 10</button>
+                <button class="filter-btn" data-filter="11">Khối 11</button>
+            </div>
+
+            <div class="trophy-grid">
+
+                <!-- Tiêu đề khối -->
+                <div class="section-divider" data-filter="10">KHỐI 10</div>
+
+                <!-- 1. Văn Nghệ -->
+                <div class="trophy-card" data-tier="1" data-filter="10">
+                    <div class="trophy-icon gold">
+                        <span class="material-symbols-outlined">star</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">VĂN NGHỆ</h2>
+                        <p class="trophy-sub">GIẢI NHẤT CẤP TRƯỜNG</p>
+                        <div class="trophy-pill">Tập thể 11A1</div>
+                    </div>
+                </div>
+
+                <!-- 2. KHKT -->
+                <div class="trophy-card" data-tier="3" data-filter="10">
+                    <div class="trophy-icon bronze">
+                        <span class="material-symbols-outlined">rocket_launch</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">KHOA HỌC CÔNG NGHỆ</h2>
+                        <p class="trophy-sub">GIẢI BA CẤP TRƯỜNG</p>
+                        <div class="trophy-pill">Phan Hoài Ân</div>
+                    </div>
+                </div>
+
+                <!-- 3. QPAN (Phan) -->
+                <div class="trophy-card" data-tier="1" data-filter="10">
+                    <div class="trophy-icon gold">
+                        <span class="material-symbols-outlined">gavel</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">LÝ THUYẾT QPAN</h2>
+                        <p class="trophy-sub">GIẢI NHẤT CẤP TỈNH</p>
+                        <div class="trophy-pill">Phan Hoài Ân</div>
+                    </div>
+                </div>
+
+                <!-- 4. QPAN (Long) -->
+                <div class="trophy-card" data-tier="1" data-filter="10">
+                    <div class="trophy-icon gold">
+                        <span class="material-symbols-outlined">gavel</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">LÝ THUYẾT QPAN</h2>
+                        <p class="trophy-sub">GIẢI NHẤT CẤP TỈNH</p>
+                        <div class="trophy-pill">Long Chí Thành</div>
+                    </div>
+                </div>
+
+                <!-- 5. QPAN (Võ) -->
+                <div class="trophy-card" data-tier="1" data-filter="10">
+                    <div class="trophy-icon gold">
+                        <span class="material-symbols-outlined">gavel</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">LÝ THUYẾT QPAN</h2>
+                        <p class="trophy-sub">GIẢI NHẤT CẤP TỈNH</p>
+                        <div class="trophy-pill">Võ Hoàng Ân</div>
+                    </div>
+                </div>
+
+                <!-- 6. Hóa (Huy) -->
+                <div class="trophy-card" data-tier="3" data-filter="10">
+                    <div class="trophy-icon bronze">
+                        <span class="material-symbols-outlined">🧪</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">HÓA HỌC</h2>
+                        <p class="trophy-sub">GIẢI BA HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Nguyễn Lê Anh Huy</div>
+                    </div>
+                </div>
+
+                <!-- 7. Toán -->
+                <div class="trophy-card" data-tier="medal" data-filter="10">
+                    <div class="trophy-icon silver-star">
+                        <span class="material-symbols-outlined">calculate</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">TOÁN HỌC</h2>
+                        <p class="trophy-sub">GIẢI KHUYẾN KHÍCH HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Lê Nguyễn Bảo Bảo</div>
+                    </div>
+                </div>
+
+                <!-- 8. Anh (Thy) -->
+                <div class="trophy-card" data-tier="medal" data-filter="10">
+                    <div class="trophy-icon silver-star">
+                        <span class="material-symbols-outlined">translate</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">TIẾNG ANH</h2>
+                        <p class="trophy-sub">GIẢI KHUYẾN KHÍCH HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Đỗ Ngọc Minh Thy</div>
+                    </div>
+                </div>
+
+                <!-- 9. Văn (Yến) -->
+                <div class="trophy-card" data-tier="3" data-filter="10">
+                    <div class="trophy-icon bronze">
+                        <span class="material-symbols-outlined">menu_book</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">NGỮ VĂN</h2>
+                        <p class="trophy-sub">GIẢI BA HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Võ Kim Yến</div>
+                    </div>
+                </div>
+
+                <!-- Tiêu đề khối 11 -->
+                <div class="section-divider" data-filter="11">KHỐI 11</div>
+
+                <!-- 10. Sĩ Tố -->
+                <div class="trophy-card" data-tier="1" data-filter="11">
+                    <div class="trophy-icon gold">
+                        <span class="material-symbols-outlined">star</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">NHẤT THÁNG</h2>
+                        <p class="trophy-sub">NHẤT THÁNG 11</p>
+                        <div class="trophy-pill">Tập thể 11A1</div>
+                    </div>
+                </div>
+
+                <!-- 11. Báo Điện Tử -->
+                <div class="trophy-card" data-tier="1" data-filter="11">
+                    <div class="trophy-icon gold">
+                        <span class="material-symbols-outlined">description</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">BÁO ĐIỆN TỬ</h2>
+                        <p class="trophy-sub">GIẢI NHẤT CẤP TRƯỜNG</p>
+                        <div class="trophy-pill">Tập thể 11A1</div>
+                    </div>
+                </div>
+
+                <!-- 12. Tháo lắp súng (Phan) -->
+                <div class="trophy-card" data-tier="1" data-filter="11">
+                    <div class="trophy-icon gold">
+                        <span class="material-symbols-outlined">handyman</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">THÁO LẮP SÚNG</h2>
+                        <p class="trophy-sub">GIẢI NHẤT CẤP TRƯỜNG</p>
+                        <div class="trophy-pill">Phan Hoài Ân</div>
+                    </div>
+                </div>
+
+                <!-- 13. Tiểu đội trưởng (Phan) -->
+                <div class="trophy-card" data-tier="1" data-filter="11">
+                    <div class="trophy-icon gold">
+                        <span class="material-symbols-outlined">leaderboard</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">TIỂU ĐỘI TRƯỞNG</h2>
+                        <p class="trophy-sub">GIẢI NHẤT CẤP TRƯỜNG</p>
+                        <div class="trophy-pill">Phan Hoài Ân</div>
+                    </div>
+                </div>
+
+                <!-- 14. QPAN (Phan) -->
+                <div class="trophy-card" data-tier="1" data-filter="11">
+                    <div class="trophy-icon gold">
+                        <span class="material-symbols-outlined">gavel</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">LÝ THUYẾT QPAN</h2>
+                        <p class="trophy-sub">GIẢI NHẤT CẤP TỈNH</p>
+                        <div class="trophy-pill">Phan Hoài Ân</div>
+                    </div>
+                </div>
+
+                <!-- 15. QPAN (Long) -->
+                <div class="trophy-card" data-tier="1" data-filter="11">
+                    <div class="trophy-icon gold">
+                        <span class="material-symbols-outlined">gavel</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">LÝ THUYẾT QPAN</h2>
+                        <p class="trophy-sub">GIẢI NHẤT CẤP TỈNH</p>
+                        <div class="trophy-pill">Long Chí Thành</div>
+                    </div>
+                </div>
+
+                <!-- 16. QPAN Ba (Long) -->
+                <div class="trophy-card" data-tier="3" data-filter="11">
+                    <div class="trophy-icon bronze">
+                        <span class="material-symbols-outlined">gavel</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">LÝ THUYẾT QPAN</h2>
+                        <p class="trophy-sub">GIẢI BA CẤP TỈNH</p>
+                        <div class="trophy-pill">Long Chí Thành</div>
+                    </div>
+                </div>
+
+                <!-- 17. Tháo lắp súng (Sang) -->
+                <div class="trophy-card" data-tier="1" data-filter="11">
+                    <div class="trophy-icon gold">
+                        <span class="material-symbols-outlined">handyman</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">THÁO LẮP SÚNG</h2>
+                        <p class="trophy-sub">GIẢI NHẤT CẤP TRƯỜNG</p>
+                        <div class="trophy-pill">Đoàn Bá Sang</div>
+                    </div>
+                </div>
+
+                <!-- 18. HSG Hóa (Huy) -->
+                <div class="trophy-card" data-tier="1" data-filter="11">
+                    <div class="trophy-icon gold">
+                        <span class="material-symbols-outlined">🧪</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">HÓA HỌC</h2>
+                        <p class="trophy-sub">GIẢI NHẤT HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Nguyễn Lê Anh Huy</div>
+                    </div>
+                </div>
+
+                <!-- 19. HSG Hóa (Long) -->
+                <div class="trophy-card" data-tier="2" data-filter="11">
+                    <div class="trophy-icon silver">
+                        <span class="material-symbols-outlined">🧪</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">HÓA HỌC</h2>
+                        <p class="trophy-sub">GIẢI NHÌ HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Long Chí Thành</div>
+                    </div>
+                </div>
+
+                <!-- 20. Hóa Ba (Vinh) -->
+                <div class="trophy-card" data-tier="3" data-filter="11">
+                    <div class="trophy-icon bronze">
+                        <span class="material-symbols-outlined">🧪</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">HÓA HỌC</h2>
+                        <p class="trophy-sub">GIẢI BA HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Ngô Tấn Vinh</div>
+                    </div>
+                </div>
+
+                <!-- 21. Hóa Ba (Khải) -->
+                <div class="trophy-card" data-tier="3" data-filter="11">
+                    <div class="trophy-icon bronze">
+                        <span class="material-symbols-outlined">🧪</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">HÓA HỌC</h2>
+                        <p class="trophy-sub">GIẢI BA HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Dương Duy Khải</div>
+                    </div>
+                </div>
+
+                <!-- 22. KK Hóa (Nhi) -->
+                <div class="trophy-card" data-tier="medal" data-filter="11">
+                    <div class="trophy-icon silver-star">
+                        <span class="material-symbols-outlined">🧪</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">HÓA HỌC</h2>
+                        <p class="trophy-sub">GIẢI KK HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Trần Ngọc Nhi</div>
+                    </div>
+                </div>
+
+                <!-- 23. KK Toán (Cương) -->
+                <div class="trophy-card" data-tier="medal" data-filter="11">
+                    <div class="trophy-icon silver-star">
+                        <span class="material-symbols-outlined">calculate</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">TOÁN HỌC</h2>
+                        <p class="trophy-sub">GIẢI KK HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Trần Mai Kim Cương</div>
+                    </div>
+                </div>
+
+                <!-- 24. KK Toán (Bảo) -->
+                <div class="trophy-card" data-tier="medal" data-filter="11">
+                    <div class="trophy-icon silver-star">
+                        <span class="material-symbols-outlined">calculate</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">TOÁN HỌC</h2>
+                        <p class="trophy-sub">GIẢI KK HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Lê Nguyễn Bảo Bảo</div>
+                    </div>
+                </div>
+
+                <!-- 25. Lý Ba (Tâm) -->
+                <div class="trophy-card" data-tier="3" data-filter="11">
+                    <div class="trophy-icon bronze">
+                        <span class="material-symbols-outlined">fitness_center</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">VẬT LÝ</h2>
+                        <p class="trophy-sub">GIẢI BA HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Nguyễn Thanh Tâm</div>
+                    </div>
+                </div>
+
+                <!-- 26. Lý Ba (Khôi) -->
+                <div class="trophy-card" data-tier="3" data-filter="11">
+                    <div class="trophy-icon bronze">
+                        <span class="material-symbols-outlined">fitness_center</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">VẬT LÝ</h2>
+                        <p class="trophy-sub">GIẢI BA HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Phan Lê Khôi</div>
+                    </div>
+                </div>
+
+                <!-- 27. Lý KK (Thiêng) -->
+                <div class="trophy-card" data-tier="medal" data-filter="11">
+                    <div class="trophy-icon silver-star">
+                        <span class="material-symbols-outlined">fitness_center</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">VẬT LÝ</h2>
+                        <p class="trophy-sub">GIẢI KK HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Từ Tiểu Thiêng</div>
+                    </div>
+                </div>
+
+                <!-- 28. Sinh KK (Ân) -->
+                <div class="trophy-card" data-tier="medal" data-filter="11">
+                    <div class="trophy-icon silver-star">
+                        <span class="material-symbols-outlined">psychology</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">SINH HỌC</h2>
+                        <p class="trophy-sub">GIẢI KK HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Võ Hoàng Ân</div>
+                    </div>
+                </div>
+
+                <!-- 29. Anh Ba (Thy) -->
+                <div class="trophy-card" data-tier="3" data-filter="11">
+                    <div class="trophy-icon bronze">
+                        <span class="material-symbols-outlined">translate</span>
+                    </div>
+                    <div class="trophy-content">
+                        <h2 class="trophy-title">TIẾNG ANH</h2>
+                        <p class="trophy-sub">GIẢI BA HSG CẤP TỈNH</p>
+                        <div class="trophy-pill">Đỗ Ngọc Minh Thy</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+     <footer class="footer">
+         <div class="container">
+            <p>©phanhoaian va CuocsongA1</p>
+            <div class="footer-links">
+                <a href="index.html">Trang Chủ</a>
+                <a href="./achievements/">Thành Tựu</a>
+                <a href="./timeline/">Dấu Chân</a>
+                <a href="./members/">Bạn Bè</a>
+                <a href="./gallery/">Kỷ Niệm</a>
+            </div>
+        </div>
+    </footer>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
